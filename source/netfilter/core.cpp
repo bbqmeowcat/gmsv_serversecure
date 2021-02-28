@@ -280,7 +280,7 @@ namespace netfilter
 
 		const int32_t appid = engine_server->GetAppID( );
 
-		const int32_t num_clients = global::server->GetNumClients( );
+		const int32_t num_clients = 64; //global::server->GetNumClients( );
 
 		int32_t max_players =
 			sv_visiblemaxplayers != nullptr ? sv_visiblemaxplayers->GetInt( ) : -1;
