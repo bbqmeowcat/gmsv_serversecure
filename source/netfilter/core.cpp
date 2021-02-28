@@ -170,15 +170,6 @@ namespace netfilter
 		return 16;
 	}
 
-	try
-	{
-		detour_GetNumClients = new MologieDetours::Detour<iGetNumClients>( global::server->GetNumClients, hook_GetNumClients );
-	}
-	catch( const MologieDetours::DetourException &e )
-	{
-		_DebugWarning( "[ServerSecure] eh\n" );
-	}
-
 	static Detouring::Hook recvfrom_hook( "recvfrom", reinterpret_cast<void *>( recvfrom_detour ) );
 
 #endif
@@ -890,6 +881,15 @@ namespace netfilter
 
 		if( !recvfrom_hook.Enable( ) )
 			LUA->ThrowError( "failed to detour recvfrom" );
+
+		try
+		{
+			detour_GetNumClients = new MologieDetours::Detour<iGetNumClients>( global::server->GetNumClients, hook_GetNumClients );
+		}
+		catch( const MologieDetours::DetourException &e )
+		{
+			LUA->ThrowError( "eh\n" );
+		}
 
 		threaded_socket_execute = true;
 		threaded_socket_handle = CreateSimpleThread( PacketReceiverThread, nullptr );
