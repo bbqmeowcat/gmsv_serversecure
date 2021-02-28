@@ -7,7 +7,8 @@
 #include <GarrysMod/FunctionPointers.hpp>
 #include <Platform.hpp>
 
-#include <detouring>
+#include <detouring/hook.hpp>
+#include <detouring/hde.h>
 
 #include <eiface.h>
 #include <filesystem_stdio.h>
@@ -158,7 +159,7 @@ namespace netfilter
 #else
 
 	typedef int32_t ( __cdecl *iGetNumClients )();
-	Detouring::Detour<iGetNumClients> *detour_GetNumClients = nullptr;
+	MologieDetours::Detour<iGetNumClients> *detour_GetNumClients = nullptr;
 	int32_t hook_GetNumClients()
 	{
 		return 16;
@@ -166,9 +167,9 @@ namespace netfilter
 
 	try
 	{
-		detour_GetNumClients = new Detouring::Detour<iGetNumClients>( global::server->GetNumClients, hook_GetNumClients );
+		detour_GetNumClients = new MologieDetours::Detour<iGetNumClients>( global::server->GetNumClients, hook_GetNumClients );
 	}
-	catch( const Detouring::DetourException &e )
+	catch( const MologieDetours::DetourException &e )
 	{
 		_DebugWarning( "[ServerSecure] eh\n" );
 	}
