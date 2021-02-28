@@ -7,7 +7,7 @@
 #include <GarrysMod/FunctionPointers.hpp>
 #include <Platform.hpp>
 
-#include <detouring/hook.hpp>
+#include <detouring>
 
 #include <eiface.h>
 #include <filesystem_stdio.h>
