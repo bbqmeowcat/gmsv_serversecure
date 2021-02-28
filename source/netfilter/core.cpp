@@ -7,8 +7,13 @@
 #include <GarrysMod/FunctionPointers.hpp>
 #include <Platform.hpp>
 
-#include <detouring/hook.hpp>
+#include <detouring/classproxy.hpp>
+#include <detouring/detours.h>
 #include <detouring/hde.h>
+#include <detouring/helpers.hpp>
+#include <detouring/hook.hpp>
+#include <detouring/platform.hpp>
+#include <detouring/vfnhook.h>
 
 #include <eiface.h>
 #include <filesystem_stdio.h>
