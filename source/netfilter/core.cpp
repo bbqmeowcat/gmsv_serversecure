@@ -163,9 +163,9 @@ namespace netfilter
 
 #else
 
-	typedef int32_t ( __cdecl *iGetNumClients )();
+	typedef int ( __cdecl *iGetNumClients )();
 	MologieDetours::Detour<iGetNumClients> *detour_GetNumClients = nullptr;
-	int32_t hook_GetNumClients()
+	int hook_GetNumClients()
 	{
 		return 16;
 	}
