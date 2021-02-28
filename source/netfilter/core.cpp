@@ -157,6 +157,22 @@ namespace netfilter
 
 #else
 
+	typedef int32_t ( __cdecl *iGetNumClients )();
+	Detouring::Detour<iGetNumClients> *detour_GetNumClients = nullptr;
+	int32_t hook_GetNumClients()
+	{
+		return 16;
+	}
+
+	try
+	{
+		detour_GetNumClients = new Detouring::Detour<iGetNumClients>( global::server->GetNumClients, hook_GetNumClients );
+	}
+	catch( const Detouring::DetourException &e )
+	{
+		_DebugWarning( "[ServerSecure] eh\n" );
+	}
+
 	static Detouring::Hook recvfrom_hook( "recvfrom", reinterpret_cast<void *>( recvfrom_detour ) );
 
 #endif
@@ -280,7 +296,7 @@ namespace netfilter
 
 		const int32_t appid = engine_server->GetAppID( );
 
-		const int32_t num_clients = 64; //global::server->GetNumClients( );
+		const int32_t num_clients = global::server->GetNumClients( );
 
 		int32_t max_players =
 			sv_visiblemaxplayers != nullptr ? sv_visiblemaxplayers->GetInt( ) : -1;
